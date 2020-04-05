@@ -18,7 +18,7 @@ new Vue({
 // 绑定实例
 veqs._bindInstance({
   id: 'app',
-  dialogPath: 'dialogs'
+  autoBindComponents: true
 });
 Vue.prototype.veqs = veqs;
 

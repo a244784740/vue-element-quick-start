@@ -17,8 +17,12 @@ allFiles.keys().forEach(path => {
         });
     }
 })
-let _bindAllComponents = function() {
-    allComponents.map(item => {
+/**
+ * 组件注册为全局组件
+ * coms：组件数组
+*/
+let _bindComponents = function(coms) {
+    coms.map(item => {
         Vue.component(item.name, item.component)
     })
 }
@@ -43,6 +47,8 @@ export default {
     _veqsConfig: {
         // 根组件id
         id: 'app',
+        // 自动绑定组件，设置成false时需要制定dialogPath
+        autoBindComponents: true,
         // 弹窗文件夹路径
         dialogPath: 'dialogs'
     },
@@ -75,18 +81,22 @@ export default {
     },
     /**
      * 绑定实例
-     * id：根组件id
-     * dialogPath：弹窗文件夹路径
+     * veqsConfig：基础配置
     */
     _bindInstance(veqsConfig) {
-        _bindAllComponents();
         this._veqsConfig = Object.assign(this._veqsConfig, veqsConfig, {});
-        this._bindDialogCom();
+        if (veqsConfig.autoBindComponents) {
+            _bindComponents(allComponents);
+        } else {    // 只绑定框架需要相关组件：弹窗
+            let coms = this._getComponentsByPath(this._veqsConfig.dialogPath);
+            _bindComponents(coms);
+        }
+        this._AppendDialogCom();
     },
     /**
-     * 绑定弹窗组件
+     * 添加弹窗组件
     */
-    _bindDialogCom() {
+   _AppendDialogCom() {
         let dom = document.getElementById(this._veqsConfig.id);
         const Dialogs = Vue.extend({
             template: 
