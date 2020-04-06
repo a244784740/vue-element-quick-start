@@ -43,14 +43,21 @@ Vue.prototype.veqs = veqs;
 ### App.Vue
 ```javascript
 // 激活弹窗
-let dialogConfig = {
-    dialogType: 'aDialog',      // 弹窗组件名称
+let dialog = {
+    dialogType: 'aDialog',
+    /**
+     * 通用属性：参考element UI https://element.eleme.cn/#/zh-CN/component/dialog  暂不支持slot：title
+     * 自定义属性： 
+     * max-height  最大高度
+     * */
+    config: {
+        title: '弹窗A'
+    },
     item: {}
 }
-this.veqs._addDialogFunc(dialogConfig);
-
+this.veqs._addDialogFunc(dialog);
 // 关闭弹窗
-dialogConfig.close();
+dialog.close();
 ```
 
 ### 原理：根组件添加弹窗
@@ -81,7 +88,7 @@ let _bindComponents = function(coms) {
     })
 }
 ```
-1. 根据v-for和component动态组件语法创建弹窗容器
+3. 根据v-for和component动态组件语法创建弹窗容器
 ```javascript
 let dom = document.getElementById(this._veqsConfig.id);
 const Dialogs = Vue.extend({
