@@ -13,11 +13,15 @@ export default {
   },
   methods: {
     addDialog() {
-      let dialogConfig = {
+      let dialog = {
         dialogType: 'aDialog',
+        config: {
+            title: '弹窗A',
+            'max-height': '400px'
+        },
         item: {}
       }
-      this.veqs._addDialogFunc(dialogConfig);
+      this.veqs._addDialogFunc(dialog);
     }
   }
 }

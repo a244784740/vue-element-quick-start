@@ -1,7 +1,8 @@
 <template>
-    <el-dialog title="提示" width="30%" :visible.sync="dialog.isShow" :before-close="dialog.close">
+    <baseDialog :dialog="dialog">
         <el-button @click="openDialog">打开二级</el-button>
-    </el-dialog>
+        <div slot="footer">footer</div>
+    </baseDialog>
 </template>
 
 <script>
