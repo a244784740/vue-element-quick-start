@@ -3,10 +3,10 @@ import Vue from 'vue';
 /**
  * 组件相关,获取项目内所有组件
 */
-const allFiles = require.context('./', true, /\.vue/);
+const allVueFiles = require.context('@', true, /\.vue/);
 let allComponents = [];
-allFiles.keys().forEach(path => {
-    const com = allFiles(path)
+allVueFiles.keys().forEach(path => {
+    const com = allVueFiles(path)
     let lastIndex = path.lastIndexOf('/');
     const comName = path.substring(lastIndex + 1).split('.vue')[0];
     if (comName) {
@@ -42,12 +42,12 @@ let _coms2Obj = function(coms) {
 export default {
     name: 'veqs',
     /**
-     * 配置项
+     * 默认配置项
      * */ 
     _veqsConfig: {
         // 根组件id
         id: 'app',
-        // 自动绑定组件，设置成false时需要制定dialogPath
+        // 自动绑定组件，设置成false时需要传入dialogPath
         autoBindComponents: true,
         // 弹窗文件夹路径
         dialogPath: 'dialogs'
@@ -56,10 +56,6 @@ export default {
      * 弹窗组件
     */
     _Dialogs: '',
-    /**
-     * 弹窗数组
-    */
-    // _dialogs: [],
     /**
      * 根据路径(文件名)获取组件列表
      * path：路径
@@ -133,7 +129,7 @@ export default {
     */
     _removeDialogFunc(dialogConfig) {
         dialogConfig.isShow = false;
-        this._Dialogs.dialogs = this._dialogs.filter(dialog => {
+        this._Dialogs.dialogs = this._Dialogs.dialogs.filter(dialog => {
             return dialog.isShow;
         });
     }
